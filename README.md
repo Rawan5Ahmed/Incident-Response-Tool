@@ -14,7 +14,7 @@ for, triage and respond to cyber threats via a simulated SOC workflow.
 
 → Notification of high severity incidents to facilitate prompt incident response.
 
-*Table of Contents*
+## Table of Contents
 1. [Problem Statement](#problem-statement)
 2. [Objectives](#objectives)
 3. [Proposed Features](#proposed-features)
@@ -23,9 +23,9 @@ for, triage and respond to cyber threats via a simulated SOC workflow.
 6. [Execution Workflow](#execution-workflow)
 7. [Architecture Diagram](#diagram)
 8. [Future Work](#future-work)
-9. [Usage](#usage--demo)
+9. [Usage](#usage)
 
-Problem Statement
+## Problem Statement
 Organizations create a significant amount of data related to security events from various sources, including Endpoint Devices, Network Monitoring Software, and Logs. Manually reviewing all of this information in order to identify abnormalities, connect associated pieces of data, and take action (e.g., create alerts) is a very labor-intensive process, leading to the following issues:
 --> Longer to identify possible threats
 --> More time needed to react to an incident
@@ -34,7 +34,7 @@ Organizations create a significant amount of data related to security events fro
 
 The proposed solution is a simple, quick, and automated means of collecting, logging, and monitoring incidents, determining what constitutes a "common" security event, and then taking the appropriate response steps with little or no manual interference.
 
-*Objectives*
+## Objectives
 The goal of the project is to:
 1. Automate the detection of Security Event from System Logs.
 2. Assign a severity level to incidents so they can be prioritized.
@@ -43,12 +43,12 @@ The goal of the project is to:
 5. Reduce the manual workload and improve the response time.
 
 
-*Proposed Features*
+## Proposed Features
 ** Event Detection Logic:**
 
-*Tools and Technologies*
-*Project Structure*
-*Execution Workflow*
-*Diagram*
-*Future Work*
-*Usage*
+## Tools and Technologies
+## Project Structure
+## Execution Workflow
+## Diagram
+## Future Work
+## Usage
