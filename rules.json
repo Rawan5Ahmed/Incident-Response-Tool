@@ -1,0 +1,14 @@
+{
+  "FAILED_LOGIN": "Medium",
+  "SUCCESS_LOGIN": "Low",
+  "BRUTE_FORCE_ATTEMPT": "High",
+  "NEW_USER": "High",
+  "USER_REMOVED": "Medium",
+  "PRIVILEGE_ESCALATION": "High",
+  "SUSPICIOUS_PROCESS": "High",
+  "UNUSUAL_PROCESS": "Medium",
+  "FAILED_CONNECTION": "Low",
+  "MALICIOUS_IP": "High",
+  "MALICIOUS_FILE": "High",
+  "FILE_DELETION": "Medium"
+}

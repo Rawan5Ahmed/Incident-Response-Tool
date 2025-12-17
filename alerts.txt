@@ -1,0 +1,6 @@
+[ALERT] High severity incident detected: BRUTE_FORCE_ATTEMPT
+[ALERT] High severity incident detected: NEW_USER
+[ALERT] High severity incident detected: PRIVILEGE_ESCALATION
+[ALERT] High severity incident detected: SUSPICIOUS_PROCESS
+[ALERT] High severity incident detected: MALICIOUS_IP
+[ALERT] High severity incident detected: MALICIOUS_FILE
