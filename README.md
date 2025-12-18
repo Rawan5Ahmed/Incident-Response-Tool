@@ -5,6 +5,7 @@ for, triage and respond to cyber threats via a simulated SOC workflow.
 
 *The tool analyzes system logs (simulated or Linux logs) and automatically*
 
+
 → Detection of suspicious activity including but not limited to Failed Logins, Privilege Escalation,Unauthorized User Creation, Unusual Processes, Network Anomalies, and Malicious Files.
 
 
