@@ -44,11 +44,108 @@ The goal of the project is to:
 
 
 ## Proposed Features
-** Event Detection Logic:**
+*Event Detection Logic:*
+- Monitor System Logs for suspicious activity.
+- Detect failed logins or unauthorized users, privileges elevated, unusual processes running on    the network, network anomalies, and malicious files added to your system.
+- Assign a severity level of low, medium, or high.
 
+*Incident Response Workflow:*
+- Track an incident’s journey from detection to analysis to containment to recovery using a timestamp for each phase of the workflow. (Detection → Analysis → Containment → Recovery)
+
+*Store Incidents:*
+- Store Incidents in an SQLite Database, called ``incidents.db``, which will log the type of event that occurred, the severity level of the incident, the time it occurred, and the system that was compromised.
+
+*Basic Containment Actions:*
+ - Provide notification for High Severity incident through the console or the ``alerts.txt`` file.
+- Future enhancement will include blocking and/or terminating processes based on the severity level of a particular incident.
+
+*Severity Based Alert Notification System (Optional enhancement):*
+- Provide notification to the Admins of High Severity Events.
+- This will assist SOC Analysts in prioritizing incidents that are Critical to the organization.
+
+*Automated Evidence Collection Folder (Optional enhancement):*
+- Create an Evidence Collection Folder for each incident, including logs, system information, and metadata so that all evidence is available in a structured format for further analysis and reporting.
+ 
 ## Tools and Technologies
+Python 3 – main programming language
+SQLite – incident storage
+VS Code / Terminal – development environment
+Matplotlib (optional) – for visualization
+Email / local notification system – for alerts
+File system operations – Python ``os`` and ``shutil`` modules
+Log sources – Linux system logs (``auth.log``, ``syslog``) or simulated logs
+
 ## Project Structure
+IR-ATS/
+│── main.py
+│── modules/
+│     ├── detection.py
+│     ├── severity.py
+│     ├── response.py
+│     ├── storage.py
+│     ├── evidence.py
+│── logs/
+│     └── security.log
+│── evidence/
+│── config/
+│     └── rules.json
+│── incidents.db
+│── alerts.txt
+
 ## Execution Workflow
+1. Start the program → python ``main.py``
+2. Detection → Parse logs for suspicious events
+3. Severity assignment → Determine Low, Medium, High severity
+4. Storage → Insert incidents into ``incidents.db``
+5. Evidence collection → Create a folder for each incident with ``log.txt`` and ``metadata.txt``
+6. Alerts → Trigger console/log notifications for high-severity events
+7. Output → Console print, ``alerts.txt``, evidence folders, database records
+
 ## Diagram
+[Logs / Security Events] --> [Detection Engine] --> [Severity Assignment]
+                                         |                 
+                                         v
+                              [Incident Storage (SQLite)]
+                                         |
+                                         v
+                        [Evidence Collection + Metadata Folder]
+                                         |
+                                         v
+                             [Alerts / Notifications]
+
+Flow Description:
+
+Logs: Input from system logs or simulated logs
+
+Detection Engine: Detects suspicious events
+
+Severity Assignment: Categorizes events as Low, Medium, or High
+
+Incident Storage: Stores all events in SQLite database
+
+Evidence Collection: Automatically saves logs and metadata per incident
+
+Alerts: Notifies admin of high-severity incidents
+
 ## Future Work
+1. The ability to perform live monitoring of Windows Event Logs in real-time
+
+2. The opportunity to perform legitimate actions of containment: block an IP address; terminate malicious processes; isolate infected files
+
+3. Make the SOC Monitoring Dashboard easier to navigate and provide better visualization of events
+
+4. Add automated email notifications for priority incidents
+   
 ## Usage
+1. Clone the repository:
+``git clone <the-link-of-repo>``
+2. Ensure Python3 is installed.
+3. Place a simulated or linux log file in ``logs/security.log``
+4. Run the program:
+   ``python main.py``
+5. Check outputs:
+   Database: ``incidents.db`` contains all recorded events
+
+   Evidence: ``evidence/`` folder contains incident-specific metadata and logs
+
+   Alerts: ``alerts.txt`` and console output for high-severity events
