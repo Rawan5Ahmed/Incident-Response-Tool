@@ -33,9 +33,13 @@ for, triage and respond to cyber threats via a simulated SOC workflow.
 
 ## Problem Statement
 Organizations create a significant amount of data related to security events from various sources, including Endpoint Devices, Network Monitoring Software, and Logs. Manually reviewing all of this information in order to identify abnormalities, connect associated pieces of data, and take action (e.g., create alerts) is a very labor-intensive process, leading to the following issues:
+
 --> Longer to identify possible threats
+
 --> More time needed to react to an incident
+
 --> Additional workload on Security Operations Center personnel
+
 --> Greater likelihood that an attack will go undetected
 
 The proposed solution is a simple, quick, and automated means of collecting, logging, and monitoring incidents, determining what constitutes a "common" security event, and then taking the appropriate response steps with little or no manual interference.
