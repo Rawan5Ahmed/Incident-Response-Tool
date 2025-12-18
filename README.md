@@ -77,12 +77,19 @@ The goal of the project is to:
 - Create an Evidence Collection Folder for each incident, including logs, system information, and metadata so that all evidence is available in a structured format for further analysis and reporting.
  
 ## Tools and Technologies
+
 Python 3 – main programming language
+
 SQLite – incident storage
+
 VS Code / Terminal – development environment
+
 Matplotlib (optional) – for visualization
+
 Email / local notification system – for alerts
+
 File system operations – Python ``os`` and ``shutil`` modules
+
 Log sources – Linux system logs (``auth.log``, ``syslog``) or simulated logs
 
 ## Project Structure
