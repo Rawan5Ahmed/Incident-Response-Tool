@@ -92,25 +92,25 @@ IR-ATS/
 
 │── modules/
 
-│       ├── detection.py
+│          ├── detection.py
 
-│       ├── severity.py
+│          ├── severity.py
 
-│       ├── response.py
+│          ├── response.py
 
-│       ├── storage.py
+│          ├── storage.py
 
-│       ├── evidence.py
+│          └── evidence.py
 
 │── logs/
 
-│       └── security.log
+│          └── security.log
 
 │── evidence/
 
 │── config/
 
-│       └── rules.json
+│          └── rules.json
 
 │── incidents.db
 
