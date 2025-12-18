@@ -69,11 +69,11 @@ The goal of the project is to:
  - Provide notification for High Severity incident through the console or the ``alerts.txt`` file.
 - Future enhancement will include blocking and/or terminating processes based on the severity level of a particular incident.
 
-*Severity Based Alert Notification System (Optional enhancement):*
+*Severity Based Alert Notification System:*
 - Provide notification to the Admins of High Severity Events.
 - This will assist SOC Analysts in prioritizing incidents that are Critical to the organization.
 
-*Automated Evidence Collection Folder (Optional enhancement):*
+*Automated Evidence Collection Folder:*
 - Create an Evidence Collection Folder for each incident, including logs, system information, and metadata so that all evidence is available in a structured format for further analysis and reporting.
  
 ## Tools and Technologies
