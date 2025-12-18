@@ -127,7 +127,7 @@ IR-ATS/
 
 ## Diagram
 
-[Logs / Security Events] --> [Detection Engine] --> [Severity Assignment]
+    [Logs / Security Events] --> [Detection Engine] --> [Severity Assignment]
 
                                          |                 
                                          
@@ -139,13 +139,13 @@ IR-ATS/
                                          
                                          v
                         
-                        [Evidence Collection + Metadata Folder]
+                          [Evidence Collection + Metadata Folder]
                         
                                          |
                                          
                                          v
                             
-                             [Alerts / Notifications]
+                                [Alerts / Notifications]
 
 Flow Description:
 
