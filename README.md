@@ -126,15 +126,25 @@ IR-ATS/
 7. Output → Console print, ``alerts.txt``, evidence folders, database records
 
 ## Diagram
+
 [Logs / Security Events] --> [Detection Engine] --> [Severity Assignment]
+
                                          |                 
+                                         
                                          v
+                             
                               [Incident Storage (SQLite)]
+                              
                                          |
+                                         
                                          v
+                        
                         [Evidence Collection + Metadata Folder]
+                        
                                          |
+                                         
                                          v
+                            
                              [Alerts / Notifications]
 
 Flow Description:
