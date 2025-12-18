@@ -4,13 +4,18 @@ An open-source project that is designed to simulate a Security Operations Center
 for, triage and respond to cyber threats via a simulated SOC workflow.
 
 *The tool analyzes system logs (simulated or Linux logs) and automatically*
+
 → Detection of suspicious activity including but not limited to Failed Logins, Privilege Escalation,Unauthorized User Creation, Unusual Processes, Network Anomalies, and Malicious Files.
+
 
 → Classification of event severity (low, medium, high) based on potential impact.
 
+
 → Storage of events in an organized (SQLite) structured database with timestamps to ensure accurate event tracking.
 
+
 → Automatic collection of evidence for each event (including logs, system meta-data, running processes and network connections) in a dedicated folder.
+
 
 → Notification of high severity incidents to facilitate prompt incident response.
 
@@ -78,18 +83,31 @@ Log sources – Linux system logs (``auth.log``, ``syslog``) or simulated logs
 ## Project Structure
 IR-ATS/
 │── main.py
+
 │── modules/
+
 │     ├── detection.py
+
 │     ├── severity.py
+
 │     ├── response.py
+
 │     ├── storage.py
+
 │     ├── evidence.py
+
 │── logs/
+
 │     └── security.log
+
 │── evidence/
+
 │── config/
+
 │     └── rules.json
+
 │── incidents.db
+
 │── alerts.txt
 
 ## Execution Workflow
