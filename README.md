@@ -1,4 +1,4 @@
-### Log Analyzer
+### Log Analyzer ###
 
 A Python-based Log Analyzer and Incident Response (IR) Tool that simulates collects logs, analyzes events, detects anomalies using machine learning, and supports automated incident response actions with evidence collection.
 
