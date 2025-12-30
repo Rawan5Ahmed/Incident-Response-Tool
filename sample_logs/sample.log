@@ -1,0 +1,5 @@
+2025-12-23 12:01:23 INFO Service started
+2025-12-23 12:01:24 ERROR Failed to connect to DB: timeout
+{"timestamp":"2025-12-23T12:03:00Z","level":"ERROR","message":"Unhandled exception in worker 3"}
+2025-12-23 12:05:11 INFO User login id=42
+2025-12-23 12:05:55 WARNING High memory usage detected

@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Log Analyzer</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/static/css/main.css" rel="stylesheet">
+</head>
+
+<body>
+  <div class="dashboard-container">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-title">IR-ATS</div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-label">Controls</div>
+        <!-- Upload Form Hidden Logic Triggered via Button? No, let's keep form here or make it a modal. 
+             For simplicity and functionality preservation, we will place the form in the sidebar but styled nicely. 
+        -->
+        <form id="uploadForm" class="mb-3">
+          <input class="form-control modern-input mb-2" type="file" id="logfile" name="logfile"
+            style="font-size: 0.8rem;">
+          <button class="nav-btn btn-primary">Upload Log</button>
+        </form>
+
+        <button id="trainBtn" class="nav-btn">Train Model</button>
+        <button id="analyzeBtn" class="nav-btn">Run Analysis</button>
+        <button id="collectNowBtn" class="nav-btn">Collect Now</button>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-label">Advanced</div>
+        <button id="forceAnalyzeBtn" class="nav-btn">Force Full Scan</button>
+        <button id="downloadEvidenceBtn" class="nav-btn">Export Evidence</button>
+        <button id="loadDemoBtn" class="nav-btn">Load Demo Logs</button>
+        <button id="refreshDashBtn" class="nav-btn">Refresh UI</button>
+      </div>
+
+      <div class="sidebar-section mt-auto">
+        <div class="sidebar-label">System</div>
+        <button id="clearLogsBtn" class="nav-btn danger-zone">Clear Database</button>
+        <button id="enableAlertsBtn" class="nav-btn">Enable Alerts</button>
+      </div>
+    </aside>
+
+    <!-- Header -->
+    <header class="top-header">
+      <div class="d-flex align-items-center">
+        <h2 class="mb-0" style="font-weight: 600; font-size: 1.2rem; color: var(--primary-color);">Command Center</h2>
+      </div>
+
+      <div class="system-status d-flex align-items-center">
+        <div class="d-flex align-items-center me-4">
+          <span class="status-indicator status-active"></span>
+          <span style="font-weight: 500;">System Online</span>
+        </div>
+        <span>Logs: <strong id="dbRows">0</strong></span>
+        <span>Analyzed: <strong id="dbScored">0</strong></span>
+        <span>Size: <strong id="dbSize">0 MB</strong></span>
+        <span>Model: <strong id="modelStatus">OFFLINE</strong></span>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+      <!-- Top Row: HUD -->
+      <div class="card full-width bg-white">
+        <div class="hud-panel">
+          <div class="hud-item">
+            <div class="hud-value" id="detectionCount">0</div>
+            <div class="hud-label">Detection</div>
+          </div>
+          <div class="hud-item">
+            <div class="hud-value" id="analysisCount">0</div>
+            <div class="hud-label">Analysis</div>
+          </div>
+          <div class="hud-item">
+            <div class="hud-value" id="containmentCount">0</div>
+            <div class="hud-label">Containment</div>
+          </div>
+          <div class="hud-item">
+            <div class="hud-value" id="recoveryCount">0</div>
+            <div class="hud-label">Recovery</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Middle Row: Incidents (Left) | Charts (Right) -->
+      <div class="card" style="min-height: 400px; grid-column: span 1;">
+        <div class="card-body d-flex flex-column">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="mb-0">Active Incidents</h5>
+            <button id="refreshIncidentsBtn" class="btn btn-sm btn-outline-secondary">Refresh</button>
+          </div>
+          <div class="table-responsive flex-grow-1">
+            <table class="table table-modern">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Event</th>
+                  <th>Sev</th>
+                  <th>Stage</th>
+                  <th>Detected</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="incidentsTable">
+                <tr>
+                  <td colspan="6" class="text-center text-muted">No active incidents</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="grid-column: span 1;">
+        <div class="card-body">
+          <h5>Severity Distribution</h5>
+          <div id="severityChartContainer" style="height: 200px; position: relative;">
+            <canvas id="levelChart"></canvas>
+          </div>
+          <div id="severitySummary" class="mt-3 d-flex justify-content-center gap-2"></div>
+          <p id="noDataText" class="text-muted small text-center mt-2 d-none">No data available</p>
+
+          <h5 class="mt-4">Anomaly Scores</h5>
+          <div style="height: 150px;">
+            <canvas id="anomalyChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Row: Terminal & Filters -->
+      <div class="card full-width">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="d-flex gap-2 align-items-center">
+              <h5 class="mb-0">Terminal Output</h5>
+              <select id="levelFilter" class="form-select modern-input py-1" style="width:auto; font-size: 0.8rem;">
+                <option value="">ALL LEVELS</option>
+                <option value="ERROR">ERROR</option>
+                <option value="WARNING">WARNING</option>
+                <option value="INFO">INFO</option>
+                <option value="DEBUG">DEBUG</option>
+              </select>
+              <button id="refreshBtn" class="btn btn-sm btn-outline-secondary">Tail Refresh</button>
+            </div>
+
+            <!-- Tailing Controls Mini -->
+            <div class="d-flex gap-2 align-items-center">
+              <input id="tailPath" class="form-control modern-input py-1" type="text" placeholder="Path to tail..."
+                style="width:200px; font-size:0.8rem;">
+              <button id="tailStartBtn" class="btn btn-sm btn-outline-primary">Tail</button>
+              <button id="tailStopBtn" class="btn btn-sm btn-outline-danger">Stop</button>
+              <span class="small text-muted ms-2">Status: <span id="tailStatus">Stopped</span></span>
+            </div>
+          </div>
+
+          <!-- Terminal Window -->
+          <div id="rawLogs" class="rounded p-3" style="min-height: 250px; max-height: 400px; overflow-y: auto;">
+            <pre id="logsPre">Initializing AIRS System...\nWaiting for input stream...</pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hidden / Collapsed Schedule Controls (Preserving functionality but minimizing UI clutter) -->
+      <div class="card full-width">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Scheduled Collection Agent</h5>
+            <div class="d-flex align-items-center gap-2">
+              <label class="small text-muted">Interval:</label>
+              <input id="schedInterval" class="form-control modern-input py-1" type="number" value="300"
+                style="width:70px">
+              <label class="small text-muted">Max:</label>
+              <input id="schedMaxItems" class="form-control modern-input py-1" type="number" value="1000"
+                style="width:80px">
+              <button id="schedStartBtn" class="btn btn-sm btn-primary">Start Agent</button>
+              <button id="schedStopBtn" class="btn btn-sm btn-outline-danger">Stop Agent</button>
+            </div>
+          </div>
+          <div class="mt-2 small text-muted">
+            Status: <span id="schedStatus" class="fw-bold">Unknown</span> |
+            Last Result: <span id="schedLastResult">None</span>
+          </div>
+          <!-- Hidden list to preserve ID presence implicitly or explicitly -->
+          <ul id="lastCollectAnomalies" class="d-none"></ul>
+          <ul id="anomalyList" class="d-none"></ul> <!-- Keeping this hidden as we use the table/terminal mainly now? User said preserve functionality. 
+             Wait, anomalyList was the list of cards on the right. In a pro tool, that might be too noisy. 
+             Let's put anomalyList back in a tab or a section if we want to be safe. 
+             Actually, let's keep it visible but maybe collapsed or side-by-side with terminal? 
+             Decided: I will render it below the charts in a scrollable div to ensure safety. -->
+        </div>
+      </div>
+
+      <div class="card full-width">
+        <div class="card-body">
+          <h5>Detected Anomalies Feed</h5>
+          <ul id="anomalyList" class="list-group list-group-flush" style="max-height: 300px; overflow-y: auto;">
+            <!-- Anomaly list items will be injected here -->
+          </ul>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="/static/js/main.js"></script>
+</body>
+
+</html>

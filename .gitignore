@@ -1,0 +1,26 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.DS_Store
+Thumbs.db
+
+# Database
+logs.db
+*.sqlite3
+
+# Model files (can be large, usually ignored unless necessary for demo)
+model.joblib
+
+# Environment
+env/
+venv/
+.env
+
+# Runtime Evidence
+evidence/
+scans/
+
+# IDE settings
+.vscode/
+.idea/
