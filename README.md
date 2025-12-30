@@ -1,45 +1,50 @@
-# Log Analyzer
-
-A simple Flask-based log collection and analysis tool with GUI and charts.
+Log Analyzer
+A Python-based Log Analyzer and Incident Response (IR) Tool that simulates collects logs, analyzes events, detects anomalies using machine learning, and supports automated incident response actions with evidence collection.
 
 Features
-- Upload log files (text or JSON lines)
-- Store logs in SQLite
-- Parse timestamps, levels, and messages
-- Train an IsolationForest model and detect anomalies
-- Basic dashboard with Chart.js visualizations
+
+Log Analysis & Event Classification: . Collects and parses logs . Machine-learning based detection of normal vs suspicious events
+Incident Response Workflow: . Full SOC workflow: Detection → Analysis → Containment → Recovery
+Containment Actions: . Trigger or simulate response actions (block IP, stop process)
+Digital Evidence Collection: . Automatically stores evidence for each incident
+Web Interface: . Upload logs, view analysis results, and monitor alerts
+Alerting System: . Sends alerts when suspicious activity is detected
+Project Structure
+
+log-analyzer/
+
+├── app.py # Main application / web interface
+
+├── logdb.py # Log database handling
+
+├── ir_workflow.py # Incident response workflow management
+
+├── event_classifier.py # ML-based event classification
+
+├── containment.py # Containment actions (safe or execute)
+
+├── evidence_collector.py # Collect and store digital evidence
+
+├── alerts.py # Alerting for suspicious activity
+
+├── requirements.txt # Python dependencies
+
+├── evidence/ # Folder to store collected evidence
+
+├── index.html # Web interface template
+
+└── main.js # Frontend JS logic
 
 Quickstart
-1. Create a virtualenv: `python -m venv venv` and activate it
-2. Install: `pip install -r requirements.txt`
-3. Run: `python app.py`
-4. Open `http://localhost:5000` in your browser
 
-Testing
-- Run unit tests: `pytest tests/`
+Clone the repository: git clone https://github.com/your-username/log-analyzer.git cd log-analyzer
+Create a virtual environment: python -m venv venv source venv/bin/activate # Linux / macOS venv\Scripts\activate # Windows
+Install dependencies: pip install -r requirements.txt
+Run the application: python app.py
+Incident Response Workflow
 
-Tailing usage
-- Start tailing a file: `curl -X POST -H "Content-Type: application/json" -d '{"path":"/path/to/file.log"}' http://localhost:5000/api/tail/start`
-- Stop tailing: `curl -X POST http://localhost:5000/api/tail/stop`
-
-Collect & Analyze (automatic)
-- POST JSON to `/api/collect_and_analyze` to detect host OS, fetch system logs (Event Viewer on Windows, journalctl or /var/log on Linux), ingest and run the model. Example:
-  - `curl -X POST -H "Content-Type: application/json" -d '{"max_items":1000}' http://localhost:5000/api/collect_and_analyze`
-- NOTE: Reading system logs may require elevated permissions (Administrator / root). If a command like `journalctl` or `wevtutil` isn't available or permission is denied, the endpoint will return an informative error.
-
-Scheduled collection
-- Start scheduled collection: `POST /api/schedule/start` with JSON `{"interval_sec": 300, "max_items": 1000}` to run collection every 300 seconds.
-- Stop scheduled collection: `POST /api/schedule/stop`
-- Status: `GET /api/schedule/status` (returns whether running and last run summary)
-- NOTE: The scheduler runs in-process (BackgroundScheduler). For production, consider running using a process manager (systemd, Windows Service, or Docker) and ensure permissions to read system logs.
-
-Supervised training
-- POST JSON to `/api/train_supervised` with `{"labels": [{"id": 123, "label": 1}, ...]}` to train a supervised model from labeled rows in the DB.
-- Quick demo: run `python scripts/label_and_train.py` after uploading logs and running `/api/analyze` once to auto-select anomalies for labeling.
-
-Notes & next improvements
-- Add tailing/agent for live ingestion
-- Provide labeled training data for supervised detection
-- Add time-series charts and filtering
-- Add user authentication and RBAC
-
+Detection –> Logs are collected and monitored
+Analysis –> Events are classified (normal / suspicious)
+Containment –> Actions triggered or simulated
+Evidence –> Logs and metadata are stored in the evidence/ folder
+Alerting –> Notifications sent for suspicious events
